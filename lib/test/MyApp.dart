@@ -47,6 +47,10 @@ class MyHomePageState extends State<MyHomePage> {
           children: [
             new Text("press times"),
             new Text("$_count"),
+            new FlatButton(
+                onPressed: _openNewRouter,
+                child: new Text("打开新路由")
+            ),
             new MaterialButton(
               child: new Text("1秒挑战"),
               onPressed: _pressVoid,
@@ -66,6 +70,14 @@ class MyHomePageState extends State<MyHomePage> {
   }
 
   _pressVoid() {}
+  
+  _openNewRouter(){
+    Navigator.push(context, new MaterialPageRoute(
+        builder: (context){
+          return NewRouter();
+        }
+    ));
+  }
 
   /**
    * 计算按屏幕的时间
@@ -137,4 +149,19 @@ class MyHomePageState extends State<MyHomePage> {
       return "GKD，别浪费时间";
     }
   }
+}
+
+class NewRouter extends StatelessWidget{
+  @override
+  Widget build(BuildContext context) {
+    return new Scaffold(
+      appBar: new AppBar(
+          title:new Text("router")
+      ),
+      body: new Center(
+        child: new Text("这是路由")
+      ),
+    );
+  }
+  
 }
