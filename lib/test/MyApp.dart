@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-
+/// 基本的计数器
+/// 一秒挑战(长按时间检测)
+/// 路由用法，路由传值/返回值
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -51,6 +53,10 @@ class MyHomePageState extends State<MyHomePage> {
                 onPressed: _openNewRouter,
                 child: new Text("打开新路由")
             ),
+            new FlatButton(
+                onPressed: _openNewRouterWithValue,
+                child: new Text("新路由传值")
+            ),
             new MaterialButton(
               child: new Text("1秒挑战"),
               onPressed: _pressVoid,
@@ -77,6 +83,15 @@ class MyHomePageState extends State<MyHomePage> {
           return NewRouter();
         }
     ));
+  }
+//新页面传值,并接收页面的返回值
+  _openNewRouterWithValue() async {
+    var result = await Navigator.push(context, new MaterialPageRoute(
+        builder: (context){
+          return TipsRouter(text:"测试");
+        }
+    ));
+    print("返回结果是:$result");
   }
 
   /// 计算按屏幕的时间
@@ -158,4 +173,28 @@ class NewRouter extends StatelessWidget{
     );
   }
   
+}
+/// 传值路由
+class TipsRouter extends StatelessWidget{
+  final String text;
+  TipsRouter({Key key,@required this.text}):super(key:key);
+  @override
+  Widget build(BuildContext context) {
+    return new Scaffold(
+      appBar: new AppBar(
+          title:new Text("router")
+      ),
+      body: new Center(
+          child: new Text("这是路由$text")
+      ),
+      floatingActionButton: FloatingActionButton(
+        tooltip: "返回",
+        child: new Icon(Icons.backspace),
+        onPressed: (){
+          Navigator.pop(context,"我是返回值");
+        },
+      ),
+    );
+  }
+
 }
