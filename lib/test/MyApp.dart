@@ -79,9 +79,7 @@ class MyHomePageState extends State<MyHomePage> {
     ));
   }
 
-  /**
-   * 计算按屏幕的时间
-   */
+  /// 计算按屏幕的时间
   bool _pressTimeCount(bool high) {
     setState(() {
 //      print(high);
@@ -98,9 +96,7 @@ class MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  /**
-   * 弹框提示
-   */
+  /// 弹框提示
   _openAlertDialog() {
     final action = showDialog(
       context: context,
@@ -123,9 +119,7 @@ class MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  /**
-   * 根据时间展示不同提示语
-   */
+  /// 根据时间展示不同提示语
   String getResultStr(int time){
     if(time<200){
       return "手速超越光速";

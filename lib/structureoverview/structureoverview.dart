@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 
-/**
- * 对应 Widget框架总览
- * https://flutterchina.club/widgets-intro/
- */
+/// 对应 Widget框架总览
+/// https://flutterchina.club/widgets-intro/
 class MyApp extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
@@ -36,9 +34,7 @@ class MyScaffold extends StatelessWidget{
   }
 }
 
-/**
- * 自定义导航栏
- */
+/// 自定义导航栏
 class MyAppbar extends StatelessWidget{
   final Widget title;
   MyAppbar({this.title});
