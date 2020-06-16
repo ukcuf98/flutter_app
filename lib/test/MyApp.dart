@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:local_cache_sync/local_cache_sync.dart';
+
 /// 基本的计数器
 /// 一秒挑战(长按时间检测)
 /// 路由用法，路由传值/返回值
+/// 缓存的使用
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -34,11 +37,13 @@ class MyHomePageState extends State<MyHomePage> {
   _increment() {
     setState(() {
       _count++;
+      LocalCacheSync.userDefault.setWithKey<int>('pressed_times',_count);
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    LocalCacheSync.userDefault.setWithKey<int>('pressed_times',_count);
     return new Scaffold(
       appBar: new AppBar(
         title: new Text("appbar title"),
@@ -163,12 +168,13 @@ class MyHomePageState extends State<MyHomePage> {
 class NewRouter extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
+    int _cacheCount = LocalCacheSync.userDefault.getWithKey<int>('pressed_times');
     return new Scaffold(
       appBar: new AppBar(
           title:new Text("router")
       ),
       body: new Center(
-        child: new Text("这是路由")
+        child: new Text("这是路由$_cacheCount")
       ),
     );
   }
