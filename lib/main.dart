@@ -10,7 +10,8 @@ import 'package:path_provider/path_provider.dart';
 //import 'package:flutterapp/structureoverview/structureoverview.dart';
 //ar
 import 'package:arcore_flutter_plugin/arcore_flutter_plugin.dart' show ArCoreController;
-import 'package:flutterapp/ar/app.dart';
+//import 'package:flutterapp/ar/app.dart';
+import 'package:flutterapp/filepicker/app.dart';
 void main() async {
   //缓存使用设置start
   WidgetsFlutterBinding.ensureInitialized();
