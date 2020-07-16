@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:path_provider/path_provider.dart';
 
 
 class MyApp extends StatelessWidget {
@@ -30,12 +31,30 @@ class _FilePickerDemoState extends State<FilePickerDemo> {
   bool _multiPick = false;
   FileType _pickingType = FileType.any;
   TextEditingController _controller = new TextEditingController();
+  String content;
 
   @override
   void initState() {
     super.initState();
     _controller.addListener(() => _extension = _controller.text);
   }
+
+//  Future requestPermission() async {
+//
+//    // 申请权限
+//
+//    Map<PermissionGroup, PermissionStatus> permissions =
+//      await PermissionHandler().requestPermissions([PermissionGroup.storage]);
+//
+//    // 申请结果
+//
+//    PermissionStatus permission = await PermissionHandlerPlatform().checkPermissionStatus(PermissionGroup.storage);
+//    if (permission == PermissionStatus.granted) {
+//      print("通过");
+//    } else {
+//      print("拒绝");
+//    }
+//  }
 
   void _openFileExplorer() async {
     setState(() => _loadingPath = true);
@@ -55,6 +74,11 @@ class _FilePickerDemoState extends State<FilePickerDemo> {
                 ? _extension?.replaceAll(' ', '')?.split(',')
                 : null);
       }
+//      //新建文件
+//      // 获取文档目录的路径
+//      _saveTestFile();
+//      _readTestFileContent();
+
     } on PlatformException catch (e) {
       print("Unsupported operation" + e.toString());
     }
@@ -69,6 +93,7 @@ class _FilePickerDemoState extends State<FilePickerDemo> {
       _fileName = _path != null
           ? _path.split('/').last
           : _paths != null ? _paths.keys.toString() : '...';
+      content = fileContent;
     });
   }
 
@@ -79,6 +104,43 @@ class _FilePickerDemoState extends State<FilePickerDemo> {
     String contents = await file.readAsString();
     return contents;
   }
+
+  Future<File> _getTestFile() async {
+    // 获取文档目录的路径
+    Directory appDocDir = await getApplicationDocumentsDirectory();
+    String dir = appDocDir.path;
+    print(dir);
+    final file = new File('$dir/demo.txt');
+    // print(file);
+    return file;
+  }
+
+  /**
+   * 保存value到本地文件里面
+   */
+  void _saveTestFile() async {
+    try {
+      File f = await _getTestFile();
+      IOSink slink = f.openWrite(mode: FileMode.append);
+      slink.write('abc');
+      slink.close();
+    } catch (e) {
+      // 写入错误
+      print(e);
+    }
+  }
+
+  /**
+   * 读取本地文件的内容
+   */
+  void _readTestFileContent() async {
+    File file = await _getTestFile();
+    // 从文件中读取变量作为字符串，一次全部读完存在内存里面
+    String contents = await file.readAsString();
+    print(contents);
+  }
+
+
 
   void _clearCachedFiles() {
     FilePicker.clearTemporaryFiles().then((result) {
