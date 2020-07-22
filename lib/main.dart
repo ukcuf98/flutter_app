@@ -12,9 +12,11 @@ import 'package:flutter/material.dart';
 //import 'package:arcore_flutter_plugin/arcore_flutter_plugin.dart' show ArCoreController;
 //import 'package:flutterapp/ar/app.dart';
 //文件选择，但是还无法读取文件
-import 'package:flutterapp/filepicker/app.dart';
+//import 'package:flutterapp/filepicker/app.dart';
 // 仿掘金页面
 //import 'package:flutterapp/juejinmy/MyApp.dart';
+// 表盘页
+import 'package:flutterapp/fclock/MyApp.dart';
 void main() async {
 //  //缓存使用设置start
 //  WidgetsFlutterBinding.ensureInitialized();

@@ -34,6 +34,8 @@ dependencies:
   arcore_flutter_plugin: ^0.0.5+1
   file_picker: ^1.12.0
   permission_handler: ^5.0.1+1
+  # 格式化数字,日期等
+  intl: ^0.16.1
 
 dev_dependencies:
   flutter_test:
