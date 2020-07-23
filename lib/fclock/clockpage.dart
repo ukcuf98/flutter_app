@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:flutterapp/fclock/constants.dart';
 import 'package:flutterapp/fclock/clock_container.dart';
+import 'package:flutterapp/fclock/clock_hands.dart';
 
 class ClockPage extends StatefulWidget {
   @override
@@ -51,7 +52,9 @@ class _ClockPageState extends State<ClockPage> {
             ),
             Center(
               child: ClockContainer(
-                child: null,
+                child: CustomPaint(
+                  painter: ClockHands(),
+                ),
               ),
             )
           ],
