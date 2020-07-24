@@ -17,6 +17,8 @@ import 'package:flutter/material.dart';
 //import 'package:flutterapp/juejinmy/MyApp.dart';
 // 表盘页
 import 'package:flutterapp/fclock/MyApp.dart';
+// 俄罗斯方块
+
 void main() async {
 //  //缓存使用设置start
 //  WidgetsFlutterBinding.ensureInitialized();

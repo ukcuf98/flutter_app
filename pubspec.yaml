@@ -36,6 +36,8 @@ dependencies:
   permission_handler: ^5.0.1+1
   # 格式化数字,日期等
   intl: ^0.16.1
+  # 声音
+  soundpool: ^1.1.1
 
 dev_dependencies:
   flutter_test:
