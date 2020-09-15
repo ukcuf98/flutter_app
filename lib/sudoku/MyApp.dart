@@ -4,13 +4,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: "tetris",
+      title: "Sudoku",
       theme: ThemeData(
         primarySwatch: Colors.blue
       ),
-      home: Scaffold(
-        body: null,
-      ),
+      home: null,
     );
   }
 }

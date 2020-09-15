@@ -1,16 +1,15 @@
 # flutterapp
 
-A new Flutter application.
+学习中的代码示例
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+> 目录说明
+* ar:ar相关，旧插件未正常运行，预计使用https://github.com/giandifra/arcore_flutter_plugin
+* basewidget:基本widget
+* fclock:时钟，拟态化
+* filepicker:文件选择
+* juejinmy:仿掘金-我的，单页面
+* randomword:随机词组，官网示例
+* structureoverview:对应 Widget框架总览https://flutterchina.club/widgets-intro/
+* sudoku:数独
+* test:自我测试，一秒钟挑战，路由传值
+* tetris：俄罗斯方块 
