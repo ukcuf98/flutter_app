@@ -5,6 +5,7 @@
 > 目录说明
 * ar:ar相关，旧插件未正常运行，预计使用https://github.com/giandifra/arcore_flutter_plugin
 * basewidget:基本widget
+* devdoc:flutter.cn下开发文档
 * fclock:时钟，拟态化
 * filepicker:文件选择
 * juejinmy:仿掘金-我的，单页面
