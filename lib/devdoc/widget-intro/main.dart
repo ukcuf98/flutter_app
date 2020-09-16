@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 void main(){
+  /** hello world */
 //  runApp(
 //    Center(
 //      child: Text(
@@ -9,10 +10,19 @@ void main(){
 //      ),
 //    ),
 //  );
-  runApp(MaterialApp(
-    title: "Example",
-    home: MyScaffold(),
-  ));
+  /** 基础widget */
+  // runApp(MaterialApp(
+  //   title: "Example",
+  //   home: MyScaffold(),
+  // ));
+  /** 使用material组件+处理手势 */
+  runApp(
+    MaterialApp(
+      title: "使用material组件",
+      home: TutorialHome(),
+    )
+  );
+
 }
 
 class MyAppBar extends StatelessWidget {
@@ -67,4 +77,69 @@ class MyScaffold extends StatelessWidget {
     );
   }
 }
+
+class TutorialHome extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title:Text("Tutorial"),
+        leading: IconButton(
+          icon: Icon(Icons.menu),
+        ),
+        actions: [
+          IconButton(
+              icon: Icon(Icons.search),
+              tooltip: "actions",
+              onPressed: null
+          )
+        ],
+      ),
+      body: Center(
+        // child: Column(
+        //   /// 手势监测
+        //   children:[
+        //     Text(
+        //         "Hello World"
+        //     ),
+        //     MyButton()
+        //   ]
+        // ),
+        child: Text(
+            "Hello World"
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        tooltip: "add",
+        child: Icon(Icons.add),
+        onPressed: null,
+      ),
+    );
+  }
+}
+/// 手势
+class MyButton extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: (){
+        print("mybutton was tapped");
+      },
+      child: Container(
+        height: 136.0,
+        padding: const EdgeInsets.all(18.0),
+        margin: const EdgeInsets.symmetric(horizontal: 8.0),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(5.0),
+          color: Colors.lightGreen[500]
+        ),
+        child: Text("engage"),
+      ),
+    );
+  }
+}
+
+
+
+
 
