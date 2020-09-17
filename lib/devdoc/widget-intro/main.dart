@@ -15,13 +15,29 @@ void main(){
   //   title: "Example",
   //   home: MyScaffold(),
   // ));
-  /** 使用material组件+处理手势 */
+  // /** 使用material组件+处理手势 */
+  // runApp(
+  //   MaterialApp(
+  //     title: "使用material组件",
+  //     home: TutorialHome(),
+  //   )
+  // );
+  ///根据用户输入改变widget
+  ///counter->counterDisplay+counterIncrementor
   runApp(
-    MaterialApp(
-      title: "使用material组件",
-      home: TutorialHome(),
-    )
+      MaterialApp(
+        title: "根据用户输入改变widget",
+        home: Scaffold(
+          appBar: AppBar(
+            title: Text("测试add"),
+          ),
+          body: Counter(),
+        ),
+      )
   );
+  ///整合在一起
+
+
 
 }
 
@@ -138,6 +154,62 @@ class MyButton extends StatelessWidget {
     );
   }
 }
+
+class Counter extends StatefulWidget {
+  @override
+  _CounterState createState() => _CounterState();
+}
+
+class _CounterState extends State<Counter> {
+  int _count = 0;
+  _increment(){
+    setState(() {
+      _count++;
+    });
+  }
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        // ///拆分前
+        // RaisedButton(
+        //   child: Text("increment"),
+        //   onPressed: _increment,
+        // ),
+        // Text("$_count")
+        ///拆分后
+        CounterIncrement(
+          onPressed: _increment,
+        ),
+        CounterDisplay(
+          count: _count,
+        )
+      ],
+    );
+  }
+}
+
+class CounterIncrement extends StatelessWidget {
+  final VoidCallback onPressed;
+  CounterIncrement({this.onPressed});
+  @override
+  Widget build(BuildContext context) {
+    return RaisedButton(
+      child: Text("increment"),
+      onPressed: onPressed,
+    );
+  }
+}
+
+class CounterDisplay extends StatelessWidget {
+  final int count;
+  CounterDisplay({this.count});
+  @override
+  Widget build(BuildContext context) {
+    return Text("$count");
+  }
+}
+
 
 
 
