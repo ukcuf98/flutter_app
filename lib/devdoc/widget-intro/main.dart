@@ -24,18 +24,28 @@ void main(){
   // );
   ///根据用户输入改变widget
   ///counter->counterDisplay+counterIncrementor
+  // runApp(
+  //     MaterialApp(
+  //       title: "根据用户输入改变widget",
+  //       home: Scaffold(
+  //         appBar: AppBar(
+  //           title: Text("测试add"),
+  //         ),
+  //         body: Counter(),
+  //       ),
+  //     )
+  // );
+  ///整合在一起-购物模拟
   runApp(
       MaterialApp(
         title: "根据用户输入改变widget",
-        home: Scaffold(
-          appBar: AppBar(
-            title: Text("测试add"),
-          ),
-          body: Counter(),
-        ),
+        home: ShoppingList(products: [
+          Product(name: 'Eggs'),
+          Product(name: 'Flour'),
+          Product(name: 'Chocolate chips'),
+        ],),
       )
   );
-  ///整合在一起
 
 
 
@@ -209,6 +219,100 @@ class CounterDisplay extends StatelessWidget {
     return Text("$count");
   }
 }
+
+class Product{
+  final String name;
+  Product({this.name});
+}
+
+typedef void CartChangedCallback(Product product,bool inCart);
+
+class ShoppingListItem extends StatelessWidget {
+  final Product product;
+  final bool incart;
+  final CartChangedCallback onCartChanged;
+
+  ShoppingListItem({this.product, this.incart, this.onCartChanged}) : super(key: ObjectKey(product));
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      onTap: (){
+        onCartChanged(product,incart);
+      },
+      leading: CircleAvatar(
+        backgroundColor: _getColor(context),
+        child: Text(
+          product.name
+        ),
+      ),
+      title: Text(
+        product.name,
+        style: _getTextStyle(context),
+      ),
+    );
+  }
+
+  TextStyle _getTextStyle(BuildContext context){
+    if(!incart){
+      return null;
+    }
+    return TextStyle(
+      color: Colors.black54,
+      decoration: TextDecoration.lineThrough
+    );
+  }
+
+  Color _getColor(BuildContext context){
+    if(incart){
+      return Colors.black54;
+    }else{
+      return Theme.of(context).primaryColor;
+    }
+  }
+}
+
+class ShoppingList extends StatefulWidget {
+  final List<Product> products;
+
+  ShoppingList({Key key, this.products}) : super(key: key);
+
+  @override
+  _ShoppingListState createState() => _ShoppingListState();
+}
+
+class _ShoppingListState extends State<ShoppingList> {
+  Set<Product> _shoppingCartSet = Set();
+
+  _handleCartChanged(Product product,bool incart){
+    setState(() {
+      if(!incart){
+        _shoppingCartSet.add(product);
+      }else{
+        _shoppingCartSet.remove(product);
+      }
+    });
+  }
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("cart"),
+      ),
+      body: ListView(
+        children: widget.products.map((product){
+          return ShoppingListItem(
+            product: product,
+            incart: _shoppingCartSet.contains(product),
+            onCartChanged: _handleCartChanged,
+          );
+        }).toList(),
+      ),
+    );
+  }
+}
+
+
 
 
 
