@@ -36,6 +36,8 @@ void main(){
   //     )
   // );
   ///整合在一起-购物模拟
+  ///UI体现为item列表，点击之后会显示下划线表示不可选
+  ///再点击取消下划线
   runApp(
       MaterialApp(
         title: "根据用户输入改变widget",
@@ -219,14 +221,18 @@ class CounterDisplay extends StatelessWidget {
     return Text("$count");
   }
 }
-
+///整合在一起
 class Product{
   final String name;
   Product({this.name});
 }
-
+///定义function以方便代码中使用定义的名称来代指
+///包括所需参数
 typedef void CartChangedCallback(Product product,bool inCart);
 
+///定义每一行对象对应的class
+///要展示的商品product
+///是否在购物车，以用来展示不通的ui(TextStyle+color)
 class ShoppingListItem extends StatelessWidget {
   final Product product;
   final bool incart;
@@ -282,8 +288,10 @@ class ShoppingList extends StatefulWidget {
 }
 
 class _ShoppingListState extends State<ShoppingList> {
+  ///已选中的item记录到set
   Set<Product> _shoppingCartSet = Set();
 
+  ///点击执行的操作(加入/移出)
   _handleCartChanged(Product product,bool incart){
     setState(() {
       if(!incart){
@@ -300,7 +308,7 @@ class _ShoppingListState extends State<ShoppingList> {
         title: Text("cart"),
       ),
       body: ListView(
-        children: widget.products.map((product){
+        children: widget.products.map((product){//循环遍历的方式
           return ShoppingListItem(
             product: product,
             incart: _shoppingCartSet.contains(product),
