@@ -15,13 +15,25 @@ void main(){
   //   ),
   // ));
 
+  // runApp(MaterialApp(
+  //   title: "布局构建教程",
+  //   home: Scaffold(
+  //     appBar: AppBar(
+  //       title: Text("TapBoxB"),
+  //     ),
+  //     body: ParentWidget(),
+  //   ),
+  // ));
+
+  ///点击更改文字和背景颜色
+  ///parent传参数控制文字，
   runApp(MaterialApp(
     title: "布局构建教程",
     home: Scaffold(
       appBar: AppBar(
-        title: Text("TapBoxB"),
+        title: Text("TapBoxC"),
       ),
-      body: ParentWidget(),
+      body: ParentCWidget(),
     ),
   ));
 }
@@ -279,6 +291,85 @@ class TapBoxB extends StatelessWidget {
     );
   }
 }
+
+class ParentCWidget extends StatefulWidget {
+  @override
+  _ParentCWidgetState createState() => _ParentCWidgetState();
+}
+
+class _ParentCWidgetState extends State<ParentCWidget> {
+  bool _active = false;
+
+  void _handleTapBoxChanged(bool newValue){
+    setState(() {
+      _active = newValue;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: TapBoxC(
+        active: _active,
+        onChange: _handleTapBoxChanged,
+      ),
+    );
+  }
+}
+
+class TapBoxC extends StatefulWidget {
+  final bool active;
+  final ValueChanged<bool> onChange;
+  TapBoxC({Key key,this.active:false,this.onChange}):super(key:key);
+
+  @override
+  _TapBoxCState createState() => _TapBoxCState();
+}
+
+class _TapBoxCState extends State<TapBoxC> {
+  bool _highlight = false;
+
+  void _handleTap(){
+    widget.onChange(!widget.active);
+  }
+  void _handleTapDown(TapDownDetails tapDownDetails){
+    _highlight = true;
+  }
+  void _handleTapUp(TapUpDetails tapUpDetails){
+    _highlight = false;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: _handleTap,
+      onTapDown: _handleTapDown,
+      onTapUp: _handleTapUp,
+      child: Container(
+        child: Center(
+          child: Text(
+            widget.active?"active":"inactive",
+            style: TextStyle(
+              fontSize: 32,
+              color: Colors.white
+            ),
+          ),
+        ),
+        width: 200,
+        height: 200,
+        decoration: BoxDecoration(
+          color: widget.active?Colors.lightGreen[700]:Colors.grey[600],
+          border: _highlight?Border.all(
+            color: Colors.teal[700],
+            width: 10
+          ):null,
+        ),
+      ),
+    );
+  }
+}
+
+
 
 
 
