@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+///添加互动
 ///复制之前的代码，调整星号图标部分
 void main(){
   // runApp(MaterialApp(
