@@ -2,7 +2,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 ///布局约束
 void main(){
-  runApp(HomePage());
+  // runApp(HomePage());//无MaterialApp会导致Text不设置textDirection时异常
+  runApp(
+      MaterialApp(
+        title: "test",
+        home: HomePage(),
+      )
+  );
+
 }
 
 class HomePage extends StatelessWidget {
@@ -25,7 +32,7 @@ class HomePage extends StatelessWidget {
     // return Example15();
     // return Example16();//报错
     // return Example17();
-    // return Example18();
+    return Example18();
     // return Example19();
     // return Example20();
     // return Example21();
@@ -36,7 +43,7 @@ class HomePage extends StatelessWidget {
     // return Example26();
     // return Example27();
     // return Example28();
-    return Example29();
+    // return Example29();
   }
 }
 
@@ -418,6 +425,8 @@ class Example17 extends Example {
   }
 }
 
+///textDirection是否必须的问题
+///如果parent有MaterialApp可不需要设置,否则会报错
 class Example18 extends Example {
   final String code = "FittedBox(\n"
       "   child: Text('Some Example Text.'));";
@@ -435,7 +444,7 @@ class Example18 extends Example {
     return FittedBox(
       child: Text(
         "Some Example Text.",
-        textDirection: TextDirection.ltr,
+        // textDirection: TextDirection.ltr,
       ),
     );
   }
@@ -748,17 +757,28 @@ class Example28 extends Example {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: "test",
-      home: Scaffold(
-        body: Container(
-          color: blue,
-          child: Column(
-            children: [
-              Text('Hello!'),
-              Text('Goodbye!'),
-            ],
-          ),
+    // return MaterialApp(
+    //   title: "test",
+    //   home: Scaffold(
+    //     body: Container(
+    //       color: blue,
+    //       child: Column(
+    //         children: [
+    //           Text('Hello!'),
+    //           Text('Goodbye!'),
+    //         ],
+    //       ),
+    //     ),
+    //   ),
+    // );
+    return Scaffold(
+      body: Container(
+        color: blue,
+        child: Column(
+          children: [
+            Text('Hello!'),
+            Text('Goodbye!'),
+          ],
         ),
       ),
     );
@@ -783,18 +803,32 @@ class Example29 extends Example {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: "test",
-      home: Scaffold(
-        body: SizedBox.expand(
-          child: Container(
-            color: blue,
-            child: Column(
-              children: [
-                Text('Hello!'),
-                Text('Goodbye!'),
-              ],
-            ),
+    // return MaterialApp(
+    //   title: "test",
+    //   home: Scaffold(
+    //     body: SizedBox.expand(
+    //       child: Container(
+    //         color: blue,
+    //         child: Column(
+    //           children: [
+    //             Text('Hello!'),
+    //             Text('Goodbye!'),
+    //           ],
+    //         ),
+    //       ),
+    //     ),
+    //   ),
+    // );
+
+    return Scaffold(
+      body: SizedBox.expand(
+        child: Container(
+          color: blue,
+          child: Column(
+            children: [
+              Text('Hello!'),
+              Text('Goodbye!'),
+            ],
           ),
         ),
       ),
