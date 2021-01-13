@@ -4,10 +4,10 @@ import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return NeumorphicApp(
       title: '新拟态',
-      theme: new ThemeData(
-          primaryColor:Colors.blue
+      theme: NeumorphicThemeData(
+        borderColor: Colors.black
       ),
       home: HomePage(),
     );
@@ -26,13 +26,60 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
+      appBar: NeumorphicAppBar(
         title: Text('新拟态'),
+        centerTitle: true,
+        leading: NeumorphicIcon(
+          Icons.add_circle,
+          style: NeumorphicStyle(
+            color: Colors.white60,
+            lightSource: LightSource.topLeft
+          ),
+          size: 50,
+        ),
+        actions: [
+          Text('action1'),
+        ],
       ),
       body: Container(
-        padding:EdgeInsets.fromLTRB(100,100,100,100),
+        width: 400,
+        alignment: Alignment.center,
+        padding:EdgeInsets.fromLTRB(10,100,10,10),
+        color: Colors.white54,
         child: Column(
           children: [
+            Neumorphic(
+              style: NeumorphicStyle(
+                color: Colors.white,
+                boxShape: NeumorphicBoxShape.rect(),
+              ),
+              child: NeumorphicText(
+                'Flutter',
+                style: NeumorphicStyle(
+                    depth: 5,
+                    color: Colors.white,
+                    lightSource: LightSource.bottomRight
+                ),
+                textStyle: NeumorphicTextStyle(
+                    fontSize: 100
+                ),
+              ),
+            ),
+            NeumorphicSwitch(
+              value: true,
+              onChanged: (flag){
+                return !flag;
+              },
+            ),
+            NeumorphicButton(
+              child: Text(
+                '测试1'
+              ),
+              pressed: false,
+              onPressed: (){
+                print('测试1:别按我');
+              },
+            ),
             Neumorphic(
               style: NeumorphicStyle(
                   shape: NeumorphicShape.convex,
