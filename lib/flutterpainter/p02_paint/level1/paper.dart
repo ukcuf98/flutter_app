@@ -9,6 +9,7 @@ class _PaperState extends State<Paper> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      color: Colors.white,
       child: CustomPaint(
         painter: PaperPainter(),
       ),
@@ -19,7 +20,7 @@ class _PaperState extends State<Paper> {
 class PaperPainter extends CustomPainter{
   @override
   void paint(Canvas canvas, Size size) {
-
+    drawIsAntiAliasColor(canvas);
   }
 
   void drawIsAntiAliasColor(Canvas canvas){
@@ -32,7 +33,7 @@ class PaperPainter extends CustomPainter{
     );
 
     canvas.drawCircle(
-        Offset(360, 180),
+        Offset(180 + 360.0, 180),
         170,
         paint..color = Colors.red
         ..isAntiAlias = false
