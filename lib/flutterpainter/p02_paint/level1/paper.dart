@@ -41,7 +41,19 @@ class PaperPainter extends CustomPainter{
   }
 
   void drawStyleStrokeWidth(Canvas canvas){
-
+    Paint paint = Paint()..color=Colors.red;
+    canvas.drawCircle(
+        Offset(180, 180),
+        150,
+        paint..strokeWidth=50
+        ..style = PaintingStyle.stroke
+    );
+    canvas.drawCircle(
+      Offset(180+360.0, 180),
+      50,
+      paint..strokeWidth=50
+        ..style = PaintingStyle.fill
+    );
   }
 
   @override
