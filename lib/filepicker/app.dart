@@ -24,8 +24,8 @@ class FilePickerDemo extends StatefulWidget {
 class _FilePickerDemoState extends State<FilePickerDemo> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   String _fileName;
-  String _path;
-  Map<String, String> _paths;
+  String _directoryPath;
+  List<PlatformFile> _paths;
   String _extension;
   bool _loadingPath = false;
   bool _multiPick = false;
@@ -39,41 +39,33 @@ class _FilePickerDemoState extends State<FilePickerDemo> {
     _controller.addListener(() => _extension = _controller.text);
   }
 
-//  Future requestPermission() async {
-//
-//    // 申请权限
-//
-//    Map<PermissionGroup, PermissionStatus> permissions =
-//      await PermissionHandler().requestPermissions([PermissionGroup.storage]);
-//
-//    // 申请结果
-//
-//    PermissionStatus permission = await PermissionHandlerPlatform().checkPermissionStatus(PermissionGroup.storage);
-//    if (permission == PermissionStatus.granted) {
-//      print("通过");
-//    } else {
-//      print("拒绝");
-//    }
-//  }
+ Future requestPermission() async {
+
+   // 申请权限
+   Map<Permission, PermissionStatus> permissions =
+     await [Permission.storage].request();
+
+   // 申请结果
+   PermissionStatus permission = await Permission.storage.status;
+   if (permission == PermissionStatus.granted) {
+     print("通过");
+   } else {
+     print("拒绝");
+   }
+ }
 
   void _openFileExplorer() async {
     setState(() => _loadingPath = true);
     try {
-      if (_multiPick) {
-        _path = null;
-        _paths = await FilePicker.getMultiFilePath(
+        _directoryPath = null;
+        _paths  = (await FilePicker.platform.pickFiles(
             type: _pickingType,
+            allowMultiple: _multiPick,
             allowedExtensions: (_extension?.isNotEmpty ?? false)
                 ? _extension?.replaceAll(' ', '')?.split(',')
-                : null);
-      } else {
-        _paths = null;
-        _path = await FilePicker.getFilePath(
-            type: _pickingType,
-            allowedExtensions: (_extension?.isNotEmpty ?? false)
-                ? _extension?.replaceAll(' ', '')?.split(',')
-                : null);
-      }
+                : null)
+        )?.files;
+        _directoryPath = _paths[0].path;
 //      //新建文件
 //      // 获取文档目录的路径
 //      _saveTestFile();
@@ -84,21 +76,21 @@ class _FilePickerDemoState extends State<FilePickerDemo> {
     }
     var status = await Permission.storage.status;
     print(status);
-    String fileContent = await getFile(_path);
+    String fileContent = await getFile(_directoryPath);
     print(fileContent.substring(100));
     
     if (!mounted) return;
     setState(() {
       _loadingPath = false;
-      _fileName = _path != null
-          ? _path.split('/').last
-          : _paths != null ? _paths.keys.toString() : '...';
+      _fileName = _directoryPath != null
+          ? _directoryPath.split('/').last
+          : _paths != null ? _paths.map((e) => e.name).toString() : '...';
       content = fileContent;
     });
   }
 
   Future<String> getFile (String filePath) async{
-    File file = new File(filePath);;
+    File file = new File(filePath);
     file.openRead();
     // 从文件中读取变量作为字符串，一次全部读完存在内存里面
     String contents = await file.readAsString();
@@ -143,8 +135,8 @@ class _FilePickerDemoState extends State<FilePickerDemo> {
 
 
   void _clearCachedFiles() {
-    FilePicker.clearTemporaryFiles().then((result) {
-      _scaffoldKey.currentState.showSnackBar(
+    FilePicker.platform.clearTemporaryFiles().then((result) {
+      ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           backgroundColor: result ? Colors.green : Colors.red,
           content: Text((result
@@ -156,8 +148,8 @@ class _FilePickerDemoState extends State<FilePickerDemo> {
   }
 
   void _selectFolder() {
-    FilePicker.getDirectoryPath().then((value) {
-      setState(() => _path = value);
+    FilePicker.platform.getDirectoryPath().then((value) {
+      setState(() => _directoryPath = value);
     });
   }
 
@@ -219,14 +211,14 @@ class _FilePickerDemoState extends State<FilePickerDemo> {
                       child: _pickingType == FileType.custom
                           ? new TextFormField(
                         maxLength: 15,
-                        autovalidate: true,
+                        autovalidateMode: AutovalidateMode.always,
                         controller: _controller,
                         decoration:
                         InputDecoration(labelText: 'File extension'),
                         keyboardType: TextInputType.text,
                         textCapitalization: TextCapitalization.none,
                       )
-                          : new Container(),
+                          : const SizedBox(),
                     ),
                     new ConstrainedBox(
                       constraints: BoxConstraints.tightFor(width: 200.0),
@@ -242,15 +234,15 @@ class _FilePickerDemoState extends State<FilePickerDemo> {
                       padding: const EdgeInsets.only(top: 50.0, bottom: 20.0),
                       child: Column(
                         children: <Widget>[
-                          new RaisedButton(
+                          new ElevatedButton(
                             onPressed: () => _openFileExplorer(),
                             child: new Text("Open file picker"),
                           ),
-                          new RaisedButton(
+                          new ElevatedButton(
                             onPressed: () => _selectFolder(),
                             child: new Text("Pick folder"),
                           ),
-                          new RaisedButton(
+                          new ElevatedButton(
                             onPressed: () => _clearCachedFiles(),
                             child: new Text("Clear temporary files"),
                           ),
@@ -262,7 +254,10 @@ class _FilePickerDemoState extends State<FilePickerDemo> {
                           ? Padding(
                           padding: const EdgeInsets.only(bottom: 10.0),
                           child: const CircularProgressIndicator())
-                          : _path != null || _paths != null
+                          : _directoryPath != null?ListTile(
+                        title: const Text("Directory path"),
+                        subtitle: Text(_directoryPath),
+                      ) : _paths != null
                           ? new Container(
                         padding: const EdgeInsets.only(bottom: 30.0),
                         height: MediaQuery.of(context).size.height * 0.50,
@@ -276,11 +271,10 @@ class _FilePickerDemoState extends State<FilePickerDemo> {
                                     _paths != null && _paths.isNotEmpty;
                                 final String name = 'File $index: ' +
                                     (isMultiPath
-                                        ? _paths.keys.toList()[index]
+                                        ? _paths.map((e) => e.name).toList()[index]
                                         : _fileName ?? '...');
-                                final path = isMultiPath
-                                    ? _paths.values.toList()[index].toString()
-                                    : _path;
+                                final path = _paths
+                                    .map((e) => e.name).toList()[index].toString();
 
                                 return new ListTile(
                                   title: new Text(

@@ -36,7 +36,7 @@ class ColorSelector extends StatelessWidget {
   void _changeColor(BuildContext context){
     showDialog(
       context: context,
-      child: AlertDialog(
+      builder: (BuildContext context) => AlertDialog(
         title: const Text('Pick a color!'),
         content: SingleChildScrollView(
           child: ColorPicker(
@@ -47,7 +47,7 @@ class ColorSelector extends StatelessWidget {
           ),
         ),
         actions: [
-          FlatButton(
+          TextButton(
             child: const Text('Close'),
             onPressed: (){
               Navigator.of(context).pop();
