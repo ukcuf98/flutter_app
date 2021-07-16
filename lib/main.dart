@@ -8,17 +8,18 @@ import 'package:flutter/material.dart';
 //import 'package:flutterapp/randomword/randomword.dart';
 //框架概览
 //import 'package:flutterapp/structureoverview/structureoverview.dart';
-//ar
-import 'package:arcore_flutter_plugin/arcore_flutter_plugin.dart' show ArCoreController;
+// //ar
+// import 'package:arcore_flutter_plugin/arcore_flutter_plugin.dart' show ArCoreController;
 //import 'package:flutterapp/ar/app.dart';
 //文件选择，但是还无法读取文件
 //import 'package:flutterapp/filepicker/app.dart';
 // 仿掘金页面
 //import 'package:flutterapp/juejinmy/MyApp.dart';
-// 表盘页
-import 'package:flutterapp/fclock/MyApp.dart';
+// // 表盘页
+// import 'package:flutterapp/fclock/MyApp.dart';
 // 俄罗斯方块
-
+//
+import 'package:flutterapp/memory/MyApp.dart';
 void main() async {
 //  //缓存使用设置start
 //  WidgetsFlutterBinding.ensureInitialized();
@@ -27,12 +28,12 @@ void main() async {
 //  'example_app/',
 //  );
 //  //缓存使用设置end
-//  //ar使用start
- WidgetsFlutterBinding.ensureInitialized();
- print('ARCORE IS AVAILABLE?');
- print(await ArCoreController.checkArCoreAvailability());
- print('\nAR SERVICES INSTALLED?');
- print(await ArCoreController.checkIsArCoreInstalled());
+// //  //ar使用start
+//  WidgetsFlutterBinding.ensureInitialized();
+//  print('ARCORE IS AVAILABLE?');
+//  print(await ArCoreController.checkArCoreAvailability());
+//  print('\nAR SERVICES INSTALLED?');
+//  print(await ArCoreController.checkIsArCoreInstalled());
   //ar使用end
   runApp(MyApp());
 }
