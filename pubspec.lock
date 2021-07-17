@@ -275,6 +275,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "2.1.3"
+  r_dotted_line_border:
+    dependency: "direct main"
+    description:
+      name: r_dotted_line_border
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "0.1.1"
   sky_engine:
     dependency: transitive
     description: flutter
