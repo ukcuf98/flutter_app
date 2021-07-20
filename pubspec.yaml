@@ -63,6 +63,8 @@ flutter:
   assets:
     - assets/devdoc/layout/
     - assets/devdoc/layout/tutorial/
+    - assets/memory/page1/
+    - assets/memory/page2/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
