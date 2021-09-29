@@ -39,7 +39,7 @@ dependencies:
   # 声音
   soundpool: ^2.1.0
   # 新拟态
-  flutter_neumorphic: ^3.0.3
+  flutter_neumorphic: ^3.1.0
   flutter_colorpicker: ^0.5.0
   # 虚线边框
   r_dotted_line_border: ^0.1.1
